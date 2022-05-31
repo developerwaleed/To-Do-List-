@@ -9,14 +9,14 @@ export default class List {
 
   display() {
     const container = document.getElementById('task-list');
-    for (const i in this.listObj) {
+    this.listObj.forEach((i) => {
       container.innerHTML += `<li class="padding">
             <div class="list-item">
                 <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-                <label for="vehicle1"> ${this.listObj[i].description}</label><br>
+                <label for="vehicle1"> ${i.description}</label><br>
             </div>
             <div class="vertical-dots"></div>
         </li>`;
-    }
+    });
   }
 }
