@@ -70,3 +70,7 @@ main {
   background-color: rgb(245, 245, 245);
   color: rgba(0, 0, 0, 0.7);
 }
+
+.checked {
+  text-decoration: line-through;
+}

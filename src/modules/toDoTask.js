@@ -1,5 +1,3 @@
-import { add } from "lodash";
-
 /* eslint-disable linebreak-style */
 export default class List {
   constructor() {
@@ -13,17 +11,52 @@ export default class List {
     this.populateLocalStorage();
   }
 
+  delTask(task) {
+    const taskId = task.target;
+    if (taskId.checked) {
+      document.getElementById(`label-text${taskId.id}`).classList.add('checked');
+      this.listObj[taskId.id - 1].completed = true;
+    } else {
+      document.getElementById(`label-text${taskId.id}`).classList.remove('checked');
+      this.listObj[taskId.id - 1].completed = false;
+    }
+    this.populateLocalStorage();
+  }
+
+  registerCheckBox() {
+    if (this.listObj.length > 0) {
+      const checkboxes = document.querySelectorAll('.check-box');
+      checkboxes.forEach((box) => {
+        box.addEventListener('click', this.delTask.bind(this));
+      });
+    }
+  }
+
+  updateCompletedTasks() {
+    this.listObj.forEach((Element) => {
+      if (Element.completed === true) {
+        document.getElementById(`label-text${Element.index}`).classList.add('checked');
+        document.getElementById(`${Element.index}`).checked = true;
+      }
+    });
+  }
+
   display() {
     const container = document.getElementById('task-list');
+    container.innerHTML = '';
+    let j = 0;
     this.listObj.forEach((i) => {
+      j += 1;
       container.innerHTML += `<li class="padding">
             <div class="list-item">
-                <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
-                <label for="vehicle1"> ${i.description}</label><br>
+                <input class="check-box" type="checkbox" id="${j}" name="task${j}" value="task">
+                <label id="label-text${j}" for="task${j}"> ${i.description}</label><br>
             </div>
             <div class="vertical-dots"></div>
         </li>`;
     });
+    this.registerCheckBox();
+    this.updateCompletedTasks();
   }
 
   populateLocalStorage() {
@@ -33,10 +66,11 @@ export default class List {
 }
 
 const task = new List();
-let addTask = document.getElementById('input-task');
-let form = document.getElementById('form');
+const addTask = document.getElementById('input-task');
+const form = document.getElementById('form');
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   task.add(addTask.value);
   form.reset();
+  task.display();
 });
