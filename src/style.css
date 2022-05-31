@@ -1,3 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
 body {
-    color: red;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  display: flex;
+}
+
+.title span {
+  padding: 20px;
+}
+
+.title img {
+  background-color: aqua;
+}
+
+.sub-main {
+  width: 50vw;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 20px 20px 50px 5px rgba(0, 0, 0, 0.05);
+  padding-top: 15px;
+}
+
+.padding {
+  padding: 20px;
+  border-bottom: 1px solid rgb(224, 224, 224);
+}
+
+.input-field {
+  border: none;
+  font-style: italic;
+}
+
+.list {
+  list-style: none;
+}
+
+.list li {
+  display: flex;
+  justify-content: space-between;
+}
+
+.vertical-dots::before {
+  content: '\2807';
+  font-size: 20px;
+}
+
+.clear-btn button {
+  padding: 20px;
+  border: none;
+  width: 100%;
+  background-color: rgb(245, 245, 245);
+  color: rgba(0, 0, 0, 0.7);
 }
