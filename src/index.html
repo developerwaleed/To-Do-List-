@@ -13,10 +13,13 @@
         <div class="sub-main">
             <div class="title">
                 <span>Today's To Do</span>
-                <img src="../img/recycling-symbol.png" alt="" >
+                <img src="../img/recycling-symbol.png" alt="">
             </div>
-            <input class=" input-field padding" type="text" name="input-list" placeholder="Add to Your List...">
-
+            <form id="form" action="./">
+                <input class=" input-field padding" id="input-task" type="text" name="input-list"
+                    placeholder="Add to Your List..." required>
+                <button type="submit"></button>
+            </form>
             <ul class="list" id="task-list">
             </ul>
             <div class="clear-btn">

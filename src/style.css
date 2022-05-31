@@ -46,6 +46,7 @@ main {
 .input-field {
   border: none;
   font-style: italic;
+  outline: none;
 }
 
 .list {

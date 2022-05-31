@@ -1,10 +1,16 @@
+import { add } from "lodash";
+
+/* eslint-disable linebreak-style */
 export default class List {
   constructor() {
-    this.listObj = [];
+    this.listObj = JSON.parse(localStorage.getItem('Tasks')) || [];
   }
 
-  add(description, completed, index) {
+  i = 0;
+
+  add(description, completed = false, index = this.i += 1) {
     this.listObj.push({ description, completed, index });
+    this.populateLocalStorage();
   }
 
   display() {
@@ -19,4 +25,18 @@ export default class List {
         </li>`;
     });
   }
+
+  populateLocalStorage() {
+    const data = JSON.stringify(this.listObj);
+    localStorage.setItem('Tasks', data);
+  }
 }
+
+const task = new List();
+let addTask = document.getElementById('input-task');
+let form = document.getElementById('form');
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  task.add(addTask.value);
+  form.reset();
+});
