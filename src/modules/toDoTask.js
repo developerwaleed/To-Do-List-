@@ -11,6 +11,14 @@ export default class List {
     this.populateLocalStorage();
   }
 
+  reAssignIndex() {
+    let k = 0;
+    this.listObj.forEach((elem) => {
+      k += 1;
+      elem.index = k;
+    });
+  }
+
   delTask(task) {
     const taskId = task.target;
     if (taskId.checked) {
@@ -73,4 +81,8 @@ form.addEventListener('submit', (e) => {
   task.add(addTask.value);
   form.reset();
   task.display();
+  console.dir('befor executing reassign', task.listObj);
+  task.reAssignIndex();
+  console.dir('After executing reassign', task.listObj);
+  task.populateLocalStorage();
 });
