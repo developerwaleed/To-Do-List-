@@ -38,20 +38,22 @@ export default class List {
   // eslint-disable-next-line class-methods-use-this
   dotMenuPressed(dot) {
     const targetMenu = dot.target;
-    targetMenu.parentElement.classList.add('dot-menu');
-    targetMenu.parentElement.children[0].children[1].disabled = false;
-    targetMenu.parentElement.children[1].style.display = 'none';
-    targetMenu.parentElement.children[3].style.display = 'block';
-    targetMenu.parentElement.children[2].style.display = 'block';
+    const targetParent = targetMenu.parentElement;
+    targetParent.classList.add('dot-menu');
+    targetParent.children[0].children[1].disabled = false;
+    targetParent.children[1].style.display = 'none';
+    targetParent.children[3].style.display = 'block';
+    targetParent.children[2].style.display = 'block';
   }
 
   doneMenuPressed(done) {
     const targebtn = done.target;
-    targebtn.parentElement.classList.remove('dot-menu');
-    targebtn.parentElement.children[0].children[1].disabled = true;
-    targebtn.parentElement.children[1].style.display = 'block';
-    targebtn.parentElement.children[3].style.display = 'none';
-    targebtn.parentElement.children[2].style.display = 'none';
+    const targetParent = targebtn.parentElement;
+    targetParent.classList.remove('dot-menu');
+    targetParent.children[0].children[1].disabled = true;
+    targetParent.children[1].style.display = 'block';
+    targetParent.children[3].style.display = 'none';
+    targetParent.children[2].style.display = 'none';
 
     this.listObj.forEach((n) => {
       if (targebtn.id === `done${n.index}`) {
