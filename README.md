@@ -1,5 +1,16 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
+Screenshot 1                                      | Screenshot 2|
+:------------------------------------------------:|:-----------------------------------------------:
+![](./Screenshots/Screenshot%201.png)             |  ![](./Screenshots/Screenshot%202.png)
+|Screenshot 3                                     |  Screenshot 4 |                   
+:------------------------------------------------:|:------------------------------------------------:
+![](./Screenshots/Screenshot%203.png)             |![](./Screenshots/Screenshot%204.png)
+|Screenshot 5                                     |  Screenshot 6 |                   
+:------------------------------------------------:|:------------------------------------------------:
+![](./Screenshots/Screenshot%205.png)             |![](./Screenshots/Screenshot%206.png)
+
+## Welcome! 👋           
 # To Do List
 
 - This is a website that allows users to add the Task  he/she wants to perform.
