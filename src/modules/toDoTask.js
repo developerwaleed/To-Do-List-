@@ -172,3 +172,28 @@ form.addEventListener('submit', (e) => {
   task.populateLocalStorage();
   task.display();
 });
+
+const targetClearBtn = document.getElementById('clear-btn');
+
+targetClearBtn.addEventListener('click', () => {
+    // for (let i = 0; i < task.listObj.length; i += 1) {
+    //   if (task.listObj[i].completed) {
+    //     delete task.listObj[(task.listObj.index)-1];
+    //   }
+    // }
+    // task.listObj = _.remove(task.listObj, () => {
+    //   return task.listObj.completed === true;
+    // });
+  
+    // task.listObj = task.listObj.fiter((value, index, arr) => value[index].completed === false);
+    task.listObj = _.remove((task.listObj, (n) => n.completed === false));
+  
+    // task.reAssignIndex();
+    // task.populateLocalStorage();
+    task.display();
+    // task.listObj.forEach((i) => {
+    //   if (i.completed == true) {
+    //     task.listObj.splice(i.index-1, 1);
+    //   }
+    // });
+  });
