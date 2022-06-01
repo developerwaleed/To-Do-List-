@@ -1,4 +1,6 @@
 /* eslint-disable linebreak-style */
+import listItem from './listItem.js';
+
 export default class List {
   constructor() {
     this.listObj = JSON.parse(localStorage.getItem('Tasks')) || [];
@@ -123,9 +125,7 @@ export default class List {
 
   updateTasksComplete() {
     this.listObj.forEach((Element) => {
-      console.log(Element.completed);
       if (Element.completed === true) {
-        console.log('rundone');
         document.getElementById(`${Element.index}`).checked = true;
         document.getElementById(`label-text ${Element.index}`).classList.add('checked');
       }
@@ -138,18 +138,8 @@ export default class List {
     let j = 0;
     this.listObj.forEach((i) => {
       j += 1;
-      container.innerHTML += `<li class="padding">
-            <div class="list-item">
-                <input class="check-box" type="checkbox" id="${j}" name="task${j}" value="task">
-                <input class="labels" id="label-text ${j}" for="task${j}" disabled value="${i.description}">
-                <br>
-            </div>
-            <div class="material-symbols-outlined vertical-dots" id=dot${j}>&#xe5d4;</div>
-            <div class="material-symbols-outlined done-btn" id=done${j}>&#xe876;</div>
-            <div class="material-symbols-outlined delete-btn" id=del${j}>&#xe872;</div>
-        </li>`;
+      container.innerHTML += listItem(j, i.description);
     });
-    console.table(this.listObj);
     this.registerCheckBoxandLabelsandVerticalmenu();
     this.updateTasksComplete();
   }
@@ -176,24 +166,9 @@ form.addEventListener('submit', (e) => {
 const targetClearBtn = document.getElementById('clear-btn');
 
 targetClearBtn.addEventListener('click', () => {
-    // for (let i = 0; i < task.listObj.length; i += 1) {
-    //   if (task.listObj[i].completed) {
-    //     delete task.listObj[(task.listObj.index)-1];
-    //   }
-    // }
-    // task.listObj = _.remove(task.listObj, () => {
-    //   return task.listObj.completed === true;
-    // });
-  
-    // task.listObj = task.listObj.fiter((value, index, arr) => value[index].completed === false);
-    task.listObj = _.remove((task.listObj, (n) => n.completed === false));
-  
-    // task.reAssignIndex();
-    // task.populateLocalStorage();
-    task.display();
-    // task.listObj.forEach((i) => {
-    //   if (i.completed == true) {
-    //     task.listObj.splice(i.index-1, 1);
-    //   }
-    // });
-  });
+  const filteredArr = task.listObj.filter((x) => x.completed !== true);
+  task.listObj = filteredArr;
+  task.reAssignIndex();
+  task.populateLocalStorage();
+  task.display();
+});
