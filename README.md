@@ -2,7 +2,10 @@
 
 # To Do List
 
-> This is a website that allows users to add the Task  he/she wants to perform.
+- This is a website that allows users to add the Task  he/she wants to perform.
+- Can Also remove the selected Task and edit it.
+- The program allows user to mark the task as completed.
+- The data is stored into loca storage of browser.
 
 
 ## Built With
@@ -10,7 +13,7 @@
 - HTML
 - CSS
 - JavaScript ES6
--WebPack
+- WebPack
 
 
 ## Live Demo
@@ -32,9 +35,9 @@ To get a local copy up and running follow these simple example steps.
 Clone the repository and change the directory to portfolio
 
 ``` 
-  $ git clone git@github.com:Felix45/awsome-books.git
+  $ git clone https://github.com/caasperr/To-Do-List-.git
 
-  $ cd awsome-books
+  $ cd To-Do-List-
 
 ```
 
@@ -47,7 +50,7 @@ Install all project dependencies by running the command below
 ### Usage
 Start the http application server
 ``` 
-  $ http-server
+  $ npm start
 ```
 
 ### Deployment
