@@ -1,4 +1,6 @@
 /* eslint-disable linebreak-style */
+import listItem from './listItem.js';
+
 export default class List {
   constructor() {
     this.listObj = JSON.parse(localStorage.getItem('Tasks')) || [];
@@ -21,14 +23,14 @@ export default class List {
     });
   }
 
-  delTask(task) {
-    const taskId = task.target;
-    if (taskId.checked) {
-      document.getElementById(`label-text${taskId.id}`).classList.add('checked');
-      this.listObj[taskId.id - 1].completed = true;
+  delTask(checkbox) {
+    const checkboxId = checkbox.target;
+    if (checkboxId.checked) {
+      document.getElementById(`label-text ${checkboxId.id}`).classList.add('checked');
+      this.listObj[(checkboxId.id) - 1].completed = true;
     } else {
-      document.getElementById(`label-text${taskId.id}`).classList.remove('checked');
-      this.listObj[taskId.id - 1].completed = false;
+      document.getElementById(`label-text ${checkboxId.id}`).classList.remove('checked');
+      this.listObj[checkboxId.id - 1].completed = false;
     }
     this.populateLocalStorage();
   }
@@ -36,20 +38,22 @@ export default class List {
   // eslint-disable-next-line class-methods-use-this
   dotMenuPressed(dot) {
     const targetMenu = dot.target;
-    targetMenu.parentElement.classList.add('dot-menu');
-    targetMenu.parentElement.children[0].children[1].disabled = false;
-    targetMenu.parentElement.children[1].style.display = 'none';
-    targetMenu.parentElement.children[3].style.display = 'block';
-    targetMenu.parentElement.children[2].style.display = 'block';
+    const targetParent = targetMenu.parentElement;
+    targetParent.classList.add('dot-menu');
+    targetParent.children[0].children[1].disabled = false;
+    targetParent.children[1].style.display = 'none';
+    targetParent.children[3].style.display = 'block';
+    targetParent.children[2].style.display = 'block';
   }
 
   doneMenuPressed(done) {
     const targebtn = done.target;
-    targebtn.parentElement.classList.remove('dot-menu');
-    targebtn.parentElement.children[0].children[1].disabled = true;
-    targebtn.parentElement.children[1].style.display = 'block';
-    targebtn.parentElement.children[3].style.display = 'none';
-    targebtn.parentElement.children[2].style.display = 'none';
+    const targetParent = targebtn.parentElement;
+    targetParent.classList.remove('dot-menu');
+    targetParent.children[0].children[1].disabled = true;
+    targetParent.children[1].style.display = 'block';
+    targetParent.children[3].style.display = 'none';
+    targetParent.children[2].style.display = 'none';
 
     this.listObj.forEach((n) => {
       if (targebtn.id === `done${n.index}`) {
@@ -121,11 +125,11 @@ export default class List {
     }
   }
 
-  updateCompletedTasks() {
+  updateTasksComplete() {
     this.listObj.forEach((Element) => {
       if (Element.completed === true) {
-        document.getElementById(`label-text${Element.index}`).classList.add('checked');
         document.getElementById(`${Element.index}`).checked = true;
+        document.getElementById(`label-text ${Element.index}`).classList.add('checked');
       }
     });
   }
@@ -136,19 +140,10 @@ export default class List {
     let j = 0;
     this.listObj.forEach((i) => {
       j += 1;
-      container.innerHTML += `<li class="padding">
-            <div class="list-item">
-                <input class="check-box" type="checkbox" id="${j}" name="task${j}" value="task">
-                <input class="labels" id="label-text ${j}" for="task${j}" disabled value="${i.description}">
-                <br>
-            </div>
-            <div class="material-symbols-outlined vertical-dots" id=dot${j}>&#xe5d4;</div>
-            <div class="material-symbols-outlined done-btn" id=done${j}>&#xe876;</div>
-            <div class="material-symbols-outlined delete-btn" id=del${j}>&#xe872;</div>
-        </li>`;
+      container.innerHTML += listItem(j, i.description);
     });
     this.registerCheckBoxandLabelsandVerticalmenu();
-    this.updateCompletedTasks();
+    this.updateTasksComplete();
   }
 
   populateLocalStorage() {
@@ -165,6 +160,16 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
   task.add(addTask.value);
   form.reset();
+  task.reAssignIndex();
+  task.populateLocalStorage();
+  task.display();
+});
+
+const targetClearBtn = document.getElementById('clear-btn');
+
+targetClearBtn.addEventListener('click', () => {
+  const filteredArr = task.listObj.filter((x) => x.completed !== true);
+  task.listObj = filteredArr;
   task.reAssignIndex();
   task.populateLocalStorage();
   task.display();

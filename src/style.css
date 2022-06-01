@@ -58,12 +58,6 @@ main {
   justify-content: space-between;
 }
 
-/* .vertical-dots::before {
-  content: '\2807';
-  font-size: 20px;
-  cursor: pointer;
-} */
-
 .vertical-dots {
   cursor: pointer;
 }
@@ -78,6 +72,7 @@ main {
   width: 100%;
   background-color: rgb(245, 245, 245);
   color: rgba(0, 0, 0, 0.7);
+  cursor: pointer;
 }
 
 .checked {
