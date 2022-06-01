@@ -21,15 +21,18 @@ export default class List {
     });
   }
 
-  delTask(task) {
-    const taskId = task.target;
-    if (taskId.checked) {
-      document.getElementById(`label-text${taskId.id}`).classList.add('checked');
-      this.listObj[taskId.id - 1].completed = true;
+  delTask(checkbox) {
+    const checkboxId = checkbox.target;
+    if (checkboxId.checked) {
+      console.log((checkboxId.id));
+      document.getElementById(`label-text ${checkboxId.id}`).classList.add('checked');
+      this.listObj[(checkboxId.id) - 1].completed = true;
     } else {
-      document.getElementById(`label-text${taskId.id}`).classList.remove('checked');
-      this.listObj[taskId.id - 1].completed = false;
+      console.log('not checked');
+      document.getElementById(`label-text ${checkboxId.id}`).classList.remove('checked');
+      this.listObj[checkboxId.id - 1].completed = false;
     }
+    console.table(this.listObj);
     this.populateLocalStorage();
   }
 
@@ -147,6 +150,7 @@ export default class List {
             <div class="material-symbols-outlined delete-btn" id=del${j}>&#xe872;</div>
         </li>`;
     });
+    console.table(this.listObj);
     this.registerCheckBoxandLabelsandVerticalmenu();
     this.updateCompletedTasks();
   }
