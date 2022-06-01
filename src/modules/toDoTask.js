@@ -4,6 +4,8 @@ export default class List {
     this.listObj = JSON.parse(localStorage.getItem('Tasks')) || [];
   }
 
+  self = this;
+
   i = 0;
 
   add(description, completed = false, index = this.i += 1) {
@@ -76,13 +78,12 @@ export default class List {
 const task = new List();
 const addTask = document.getElementById('input-task');
 const form = document.getElementById('form');
+
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   task.add(addTask.value);
   form.reset();
   task.display();
-  console.dir('befor executing reassign', task.listObj);
   task.reAssignIndex();
-  console.dir('After executing reassign', task.listObj);
   task.populateLocalStorage();
 });
