@@ -24,15 +24,12 @@ export default class List {
   delTask(checkbox) {
     const checkboxId = checkbox.target;
     if (checkboxId.checked) {
-      console.log((checkboxId.id));
       document.getElementById(`label-text ${checkboxId.id}`).classList.add('checked');
       this.listObj[(checkboxId.id) - 1].completed = true;
     } else {
-      console.log('not checked');
       document.getElementById(`label-text ${checkboxId.id}`).classList.remove('checked');
       this.listObj[checkboxId.id - 1].completed = false;
     }
-    console.table(this.listObj);
     this.populateLocalStorage();
   }
 
@@ -124,11 +121,13 @@ export default class List {
     }
   }
 
-  updateCompletedTasks() {
+  updateTasksComplete() {
     this.listObj.forEach((Element) => {
+      console.log(Element.completed);
       if (Element.completed === true) {
-        document.getElementById(`label-text${Element.index}`).classList.add('checked');
+        console.log('rundone');
         document.getElementById(`${Element.index}`).checked = true;
+        document.getElementById(`label-text ${Element.index}`).classList.add('checked');
       }
     });
   }
@@ -152,7 +151,7 @@ export default class List {
     });
     console.table(this.listObj);
     this.registerCheckBoxandLabelsandVerticalmenu();
-    this.updateCompletedTasks();
+    this.updateTasksComplete();
   }
 
   populateLocalStorage() {
