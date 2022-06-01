@@ -46,6 +46,7 @@ main {
 .input-field {
   border: none;
   font-style: italic;
+  outline: none;
 }
 
 .list {
@@ -57,9 +58,18 @@ main {
   justify-content: space-between;
 }
 
-.vertical-dots::before {
+/* .vertical-dots::before {
   content: '\2807';
   font-size: 20px;
+  cursor: pointer;
+} */
+
+.vertical-dots {
+  cursor: pointer;
+}
+
+.dot-menu {
+  background-color: rgba(255, 255, 0, 0.5);
 }
 
 .clear-btn button {
@@ -68,4 +78,27 @@ main {
   width: 100%;
   background-color: rgb(245, 245, 245);
   color: rgba(0, 0, 0, 0.7);
+}
+
+.checked {
+  text-decoration: line-through;
+}
+
+.labels {
+  border: none;
+  resize: none;
+  height: 18px;
+  width: 42vw;
+  outline: none;
+  background: none;
+}
+
+.delete-btn {
+  display: none;
+  cursor: pointer;
+}
+
+.done-btn {
+  display: none;
+  cursor: pointer;
 }
