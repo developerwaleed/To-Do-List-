@@ -99,13 +99,16 @@ export default class List {
     });
   }
 
-  registerCheckBoxandLabelsandVerticalmenu() {
+  registerElements() {
     if (this.listObj.length > 0) {
       const checkboxes = document.querySelectorAll('.check-box');
       const targetLabel = document.querySelectorAll('.labels');
       const dots = document.querySelectorAll('.vertical-dots');
       const doneBtn = document.querySelectorAll('.done-btn');
       const delBtn = document.querySelectorAll('.delete-btn');
+      const draggables = document.querySelectorAll('.draggables');
+      // const container = document.querySelectorAll('.list');
+      const container = document.getElementById('task-list');
 
       checkboxes.forEach((box) => {
         box.addEventListener('click', this.delTask.bind(this));
@@ -121,6 +124,17 @@ export default class List {
       });
       delBtn.forEach((del) => {
         del.addEventListener('click', this.delbtnPressed.bind(this));
+      });
+      draggables.forEach((draggable) => {
+        draggable.addEventListener('dragstart', () => {
+          draggable.classList.add('dragging');
+        });
+        draggable.addEventListener('dragend', () => {
+          draggable.classList.remove('dragging');
+        });
+        container.addEventListener('dragover', () => {
+          console.log('dragover');
+        });
       });
     }
   }
@@ -142,7 +156,7 @@ export default class List {
       j += 1;
       container.innerHTML += listItem(j, i.description);
     });
-    this.registerCheckBoxandLabelsandVerticalmenu();
+    this.registerElements();
     this.updateTasksComplete();
   }
 

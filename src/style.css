@@ -97,3 +97,11 @@ main {
   display: none;
   cursor: pointer;
 }
+
+.draggables {
+  cursor: move;
+}
+
+.draggables.dragging {
+  opacity: 0.5;
+}
