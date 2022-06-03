@@ -1,5 +1,7 @@
 /* eslint-disable linebreak-style */
 import listItem from './listItem.js';
+import getPositionOfElement from './getElementPostion.js';
+import dragging from './DraggingFunctions.js';
 
 export default class List {
   constructor() {
@@ -10,7 +12,7 @@ export default class List {
 
   i = 0;
 
-  add(description, completed = false, index = this.i += 1) {
+  add(description, completed = false, index = (this.i += 1)) {
     this.listObj.push({ description, completed, index });
     this.populateLocalStorage();
   }
@@ -26,10 +28,14 @@ export default class List {
   delTask(checkbox) {
     const checkboxId = checkbox.target;
     if (checkboxId.checked) {
-      document.getElementById(`label-text ${checkboxId.id}`).classList.add('checked');
-      this.listObj[(checkboxId.id) - 1].completed = true;
+      document
+        .getElementById(`label-text ${checkboxId.id}`)
+        .classList.add('checked');
+      this.listObj[checkboxId.id - 1].completed = true;
     } else {
-      document.getElementById(`label-text ${checkboxId.id}`).classList.remove('checked');
+      document
+        .getElementById(`label-text ${checkboxId.id}`)
+        .classList.remove('checked');
       this.listObj[checkboxId.id - 1].completed = false;
     }
     this.populateLocalStorage();
@@ -106,9 +112,6 @@ export default class List {
       const dots = document.querySelectorAll('.vertical-dots');
       const doneBtn = document.querySelectorAll('.done-btn');
       const delBtn = document.querySelectorAll('.delete-btn');
-      const draggables = document.querySelectorAll('.draggables');
-      // const container = document.querySelectorAll('.list');
-      const container = document.getElementById('task-list');
 
       checkboxes.forEach((box) => {
         box.addEventListener('click', this.delTask.bind(this));
@@ -125,17 +128,8 @@ export default class List {
       delBtn.forEach((del) => {
         del.addEventListener('click', this.delbtnPressed.bind(this));
       });
-      draggables.forEach((draggable) => {
-        draggable.addEventListener('dragstart', () => {
-          draggable.classList.add('dragging');
-        });
-        draggable.addEventListener('dragend', () => {
-          draggable.classList.remove('dragging');
-        });
-        container.addEventListener('dragover', () => {
-          console.log('dragover');
-        });
-      });
+
+      console.log(dragging());
     }
   }
 
@@ -143,7 +137,9 @@ export default class List {
     this.listObj.forEach((Element) => {
       if (Element.completed === true) {
         document.getElementById(`${Element.index}`).checked = true;
-        document.getElementById(`label-text ${Element.index}`).classList.add('checked');
+        document
+          .getElementById(`label-text ${Element.index}`)
+          .classList.add('checked');
       }
     });
   }
