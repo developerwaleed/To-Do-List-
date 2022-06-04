@@ -1,9 +1,21 @@
+/* eslint-disable linebreak-style */
 import getPositionOfElement from './getElementPostion.js';
+// import List, { task } from './toDoTask.js';
 
 export default function dragging() {
   const draggables = document.querySelectorAll('.draggables');
-  const dragging = document.querySelectorAll('.dragging');
+  // const dragging = document.querySelectorAll('.dragging');
   const container = document.getElementById('task-list');
+
+  // function setIndex(element) {
+  //   task.listObj.forEach((obj) => {
+  //     if (obj.index === element.target.id) {
+  //     }
+  //     // });
+  //     // console.log(task.listObj);
+  //   });
+  // }
+
   draggables.forEach((draggable) => {
     draggable.addEventListener('dragstart', () => {
       draggable.classList.add('dragging');
@@ -18,6 +30,8 @@ export default function dragging() {
       e.preventDefault();
       const detectElement = getPositionOfElement(container, e.clientY);
       if (detectElement !== null) {
+        // console.log('DetectedElem=', detectElement.children[0].children[1]);
+
         container.insertBefore(dragging, detectElement);
       }
     });

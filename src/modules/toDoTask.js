@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 import listItem from './listItem.js';
-import getPositionOfElement from './getElementPostion.js';
+// import getPositionOfElement from './getElementPostion.js';
 import dragging from './DraggingFunctions.js';
 
 export default class List {
@@ -128,8 +128,7 @@ export default class List {
       delBtn.forEach((del) => {
         del.addEventListener('click', this.delbtnPressed.bind(this));
       });
-
-      console.log(dragging());
+      dragging();
     }
   }
 
@@ -162,7 +161,7 @@ export default class List {
   }
 }
 
-const task = new List();
+export const task = new List();
 const addTask = document.getElementById('input-task');
 const form = document.getElementById('form');
 
