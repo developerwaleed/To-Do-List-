@@ -1,5 +1,7 @@
 /* eslint-disable linebreak-style */
 import listItem from './listItem.js';
+// import getPositionOfElement from './getElementPostion.js';
+import dragging from './DraggingFunctions.js';
 
 export default class List {
   constructor() {
@@ -10,7 +12,7 @@ export default class List {
 
   i = 0;
 
-  add(description, completed = false, index = this.i += 1) {
+  add(description, completed = false, index = (this.i += 1)) {
     this.listObj.push({ description, completed, index });
     this.populateLocalStorage();
   }
@@ -26,10 +28,14 @@ export default class List {
   delTask(checkbox) {
     const checkboxId = checkbox.target;
     if (checkboxId.checked) {
-      document.getElementById(`label-text ${checkboxId.id}`).classList.add('checked');
-      this.listObj[(checkboxId.id) - 1].completed = true;
+      document
+        .getElementById(`label-text ${checkboxId.id}`)
+        .classList.add('checked');
+      this.listObj[checkboxId.id - 1].completed = true;
     } else {
-      document.getElementById(`label-text ${checkboxId.id}`).classList.remove('checked');
+      document
+        .getElementById(`label-text ${checkboxId.id}`)
+        .classList.remove('checked');
       this.listObj[checkboxId.id - 1].completed = false;
     }
     this.populateLocalStorage();
@@ -99,7 +105,7 @@ export default class List {
     });
   }
 
-  registerCheckBoxandLabelsandVerticalmenu() {
+  registerElements() {
     if (this.listObj.length > 0) {
       const checkboxes = document.querySelectorAll('.check-box');
       const targetLabel = document.querySelectorAll('.labels');
@@ -122,6 +128,7 @@ export default class List {
       delBtn.forEach((del) => {
         del.addEventListener('click', this.delbtnPressed.bind(this));
       });
+      dragging();
     }
   }
 
@@ -129,7 +136,9 @@ export default class List {
     this.listObj.forEach((Element) => {
       if (Element.completed === true) {
         document.getElementById(`${Element.index}`).checked = true;
-        document.getElementById(`label-text ${Element.index}`).classList.add('checked');
+        document
+          .getElementById(`label-text ${Element.index}`)
+          .classList.add('checked');
       }
     });
   }
@@ -142,7 +151,7 @@ export default class List {
       j += 1;
       container.innerHTML += listItem(j, i.description);
     });
-    this.registerCheckBoxandLabelsandVerticalmenu();
+    this.registerElements();
     this.updateTasksComplete();
   }
 
@@ -152,7 +161,7 @@ export default class List {
   }
 }
 
-const task = new List();
+export const task = new List();
 const addTask = document.getElementById('input-task');
 const form = document.getElementById('form');
 
