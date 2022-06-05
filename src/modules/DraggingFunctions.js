@@ -1,6 +1,7 @@
 /* eslint-disable linebreak-style */
 import getPositionOfElement from './getElementPostion.js';
-import List, { task } from './toDoTask.js';
+// eslint-disable-next-line import/no-cycle
+import { task } from './toDoTask.js';
 
 export default function dragging() {
   const draggables = document.querySelectorAll('.draggables');
@@ -9,20 +10,18 @@ export default function dragging() {
 
   function setIndex() {
     const objArray = [...container.querySelectorAll('.draggables')];
-    objArray.forEach((element) => {
-      let rex = /\d/;
-      const {id} = element;
-      let elementId = id.match(rex);
-      console.log(elementId);
-      // console.log(element);
-      // console.log(id.substring(id.indexOf('-'), id.length - 0));
-      // task.listObj.filter((x) => `li-${x.index}` === id).index = id.substring(
-      //   id.lastindexOf(1),
-      //   id.length - 0
-      // );
-    });
-    // console.log(task.listObj);
-    // console.log(objArray);
+
+    const tempArr = objArray.map((element) => ({
+      description: element.children[0].children[1].value,
+      completed: element.children[0].children[0].checked,
+      index: element.id.substring(
+        element.id.indexOf('-') + 1,
+        element.id.length,
+      ),
+    }));
+    task.listObj = tempArr;
+    task.display();
+    task.populateLocalStorage();
   }
 
   draggables.forEach((draggable) => {
