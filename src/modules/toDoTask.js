@@ -1,6 +1,7 @@
 /* eslint-disable linebreak-style */
 import listItem from './listItem.js';
 // import getPositionOfElement from './getElementPostion.js';
+// eslint-disable-next-line import/no-cycle
 import dragging from './DraggingFunctions.js';
 
 export default class List {
@@ -132,27 +133,15 @@ export default class List {
     }
   }
 
-  updateTasksComplete() {
-    this.listObj.forEach((Element) => {
-      if (Element.completed === true) {
-        document.getElementById(`${Element.index}`).checked = true;
-        document
-          .getElementById(`label-text ${Element.index}`)
-          .classList.add('checked');
-      }
-    });
-  }
-
   display() {
     const container = document.getElementById('task-list');
     container.innerHTML = '';
     let j = 0;
     this.listObj.forEach((i) => {
       j += 1;
-      container.innerHTML += listItem(j, i.description);
+      container.innerHTML += listItem(j, i.description, i.completed);
     });
     this.registerElements();
-    this.updateTasksComplete();
   }
 
   populateLocalStorage() {
