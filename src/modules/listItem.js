@@ -1,5 +1,5 @@
 export default function listItem(index, description) {
-  return `<li class="padding draggables" draggable="true">
+  return `<li class="padding draggables" draggable="true" id=li-${index}>
     <div class="list-item">
         <input class="check-box" type="checkbox" id="${index}" name="task${index}" value="task">
         <input class="labels" id="label-text ${index}" for="task${index}" disabled value="${description}">
