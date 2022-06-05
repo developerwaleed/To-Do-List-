@@ -13,11 +13,11 @@ Screenshot 1                                      | Screenshot 2|
 ## Welcome! 👋           
 # To Do List
 
-- This is a website that allows users to add the Task  he/she wants to perform.
-- Can Also remove the selected Task and edit it.
-- The program allows user to mark the task as completed.
-- The data is stored into loca storage of browser.
-
+- This is a website that allows users to add the Task  he/she wants to perform.😋
+- Can Also remove the selected Task and edit it.✔️
+- The program allows user to mark the task as completed.😉
+- The data is stored into loca storage of browser.✔️
+- Items are DRAGABLE 🔥🔥🔥🔥🔥🔥🔥🔥
 
 ## Built With
 
