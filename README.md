@@ -29,7 +29,7 @@ Screenshot 1                                      | Screenshot 2|
 
 ## Live Demo
 
-[Live Demo Link]()
+[Live Demo Link](https://caasperr.github.io/To-Do-List-/)
 
 
 ## Getting Started
