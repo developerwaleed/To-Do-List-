@@ -2,11 +2,11 @@
 import listItem from './listItem.js';
 // import getPositionOfElement from './getElementPostion.js';
 // eslint-disable-next-line import/no-cycle
-import dragging from './DraggingFunctions.js';
+import {dragging, setIndex} from './DraggingFunctions.js';
 
-export default class List {
+export default class ToDoList {
   constructor() {
-    this.listObj = JSON.parse(localStorage.getItem('Tasks')) || [];
+    this.taskObjArray = JSON.parse(localStorage.getItem('Tasks')) || []; // taskObjArray conatins all the values for TODO TAKS
   }
 
   self = this;
@@ -14,36 +14,36 @@ export default class List {
   i = 0;
 
   add(description, completed = false, index = (this.i += 1)) {
-    this.listObj.push({ description, completed, index });
+    this.taskObjArray.push({ description, completed, index });
     this.populateLocalStorage();
   }
 
   reAssignIndex() {
     let k = 0;
-    this.listObj.forEach((elem) => {
+    this.taskObjArray.forEach((elem) => {
       k += 1;
       elem.index = k;
     });
   }
 
-  delTask(checkbox) {
+  updateCompleteTask(checkbox) {
     const checkboxId = checkbox.target;
     if (checkboxId.checked) {
       document
         .getElementById(`label-text ${checkboxId.id}`)
         .classList.add('checked');
-      this.listObj[checkboxId.id - 1].completed = true;
+      this.taskObjArray[checkboxId.id - 1].completed = true;
     } else {
       document
         .getElementById(`label-text ${checkboxId.id}`)
         .classList.remove('checked');
-      this.listObj[checkboxId.id - 1].completed = false;
+      this.taskObjArray[checkboxId.id - 1].completed = false;
     }
     this.populateLocalStorage();
   }
 
   // eslint-disable-next-line class-methods-use-this
-  dotMenuPressed(dot) {
+  kebabMenuClicked(dot) {
     const targetMenu = dot.target;
     const targetParent = targetMenu.parentElement;
     targetParent.classList.add('dot-menu');
@@ -53,7 +53,7 @@ export default class List {
     targetParent.children[2].style.display = 'block';
   }
 
-  doneMenuPressed(done) {
+  saveChanges(done) {
     const targebtn = done.target;
     const targetParent = targebtn.parentElement;
     targetParent.classList.remove('dot-menu');
@@ -62,7 +62,7 @@ export default class List {
     targetParent.children[3].style.display = 'none';
     targetParent.children[2].style.display = 'none';
 
-    this.listObj.forEach((n) => {
+    this.taskObjArray.forEach((n) => {
       if (targebtn.id === `done${n.index}`) {
         n.description = targebtn.parentElement.children[0].children[1].value;
       }
@@ -71,11 +71,11 @@ export default class List {
     this.display();
   }
 
-  delbtnPressed(del) {
+  delTask(del) {
     const delBtn = del.target;
-    this.listObj.forEach((n) => {
+    this.taskObjArray.forEach((n) => {
       if (delBtn.id === `del${n.index}`) {
-        this.self.listObj.splice(n.index - 1, 1);
+        this.self.taskObjArray.splice(n.index - 1, 1);
       }
     });
     this.reAssignIndex();
@@ -83,19 +83,19 @@ export default class List {
     this.display();
   }
 
-  storeValue(label) {
-    const labelId = label.target;
-    labelId.addEventListener('keypress', (e) => {
+  saveEditedValue(taskField) {
+    const targetTaskField = taskField.target;
+    targetTaskField.addEventListener('keypress', (e) => {
       if (e.code === 'Enter') {
-        const parentElem = labelId.parentElement.parentElement;
+        const parentElem = targetTaskField.parentElement.parentElement;
         parentElem.classList.remove('dot-menu');
         parentElem.children[0].children[1].disabled = true;
         parentElem.children[1].style.display = 'block';
         parentElem.children[3].style.display = 'none';
         parentElem.children[2].style.display = 'none';
 
-        this.listObj.forEach((n) => {
-          if (labelId.id === `label-text ${n.index}`) {
+        this.taskObjArray.forEach((n) => {
+          if (targetTaskField.id === `label-text ${n.index}`) {
             n.description = parentElem.children[0].children[1].value;
           }
         });
@@ -107,27 +107,27 @@ export default class List {
   }
 
   registerElements() {
-    if (this.listObj.length > 0) {
+    if (this.taskObjArray.length > 0) {
       const checkboxes = document.querySelectorAll('.check-box');
-      const targetLabel = document.querySelectorAll('.labels');
-      const dots = document.querySelectorAll('.vertical-dots');
+      const targetTaskField = document.querySelectorAll('.labels');
+      const kebabMenu = document.querySelectorAll('.vertical-dots');
       const doneBtn = document.querySelectorAll('.done-btn');
       const delBtn = document.querySelectorAll('.delete-btn');
 
       checkboxes.forEach((box) => {
-        box.addEventListener('click', this.delTask.bind(this));
+        box.addEventListener('click', this.updateCompleteTask.bind(this));
       });
-      targetLabel.forEach((input) => {
-        input.addEventListener('click', this.storeValue.bind(this));
+      targetTaskField.forEach((input) => {
+        input.addEventListener('click', this.saveEditedValue.bind(this));
       });
-      dots.forEach((dot) => {
-        dot.addEventListener('click', this.dotMenuPressed.bind(this));
+      kebabMenu.forEach((dot) => {
+        dot.addEventListener('click', this.kebabMenuClicked.bind(this));
       });
       doneBtn.forEach((done) => {
-        done.addEventListener('click', this.doneMenuPressed.bind(this));
+        done.addEventListener('click', this.saveChanges.bind(this));
       });
       delBtn.forEach((del) => {
-        del.addEventListener('click', this.delbtnPressed.bind(this));
+        del.addEventListener('click', this.delTask.bind(this));
       });
       dragging();
     }
@@ -137,7 +137,7 @@ export default class List {
     const container = document.getElementById('task-list');
     container.innerHTML = '';
     let j = 0;
-    this.listObj.forEach((i) => {
+    this.taskObjArray.forEach((i) => {
       j += 1;
       container.innerHTML += listItem(j, i.description, i.completed);
     });
@@ -145,15 +145,17 @@ export default class List {
   }
 
   populateLocalStorage() {
-    const data = JSON.stringify(this.listObj);
+    const data = JSON.stringify(this.taskObjArray);
     localStorage.setItem('Tasks', data);
   }
 }
 
-export const task = new List();
+// Creating Instance of Class
+export const task = new ToDoList();
 const addTask = document.getElementById('input-task');
 const form = document.getElementById('form');
 
+// Adding Event Listener to the "Submit Form Event"
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   task.add(addTask.value);
@@ -163,11 +165,12 @@ form.addEventListener('submit', (e) => {
   task.display();
 });
 
+// Adding Event Listener to the 'CLEAR ALL COMPLETED TASK" Button
 const targetClearBtn = document.getElementById('clear-btn');
 
 targetClearBtn.addEventListener('click', () => {
-  const filteredArr = task.listObj.filter((x) => x.completed !== true);
-  task.listObj = filteredArr;
+  const filteredArr = task.taskObjArray.filter((x) => x.completed !== true);
+  task.taskObjArray = filteredArr;
   task.reAssignIndex();
   task.populateLocalStorage();
   task.display();

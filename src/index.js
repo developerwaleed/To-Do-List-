@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 import './style.css';
-import List from './modules/toDoTask.js';
+import ToDoList from './modules/toDoTask.js';
 
-const list = new List();
-list.display();
+const newTask = new ToDoList();
+newTask.display();

@@ -3,26 +3,23 @@ import getPositionOfElement from './getElementPostion.js';
 // eslint-disable-next-line import/no-cycle
 import { task } from './toDoTask.js';
 
-export default function dragging() {
+const taskContainer = document.getElementById('task-list');
+
+export const setIndex = () => {
+  const objArray = [...taskContainer.querySelectorAll('.draggables')];
+
+  const tempArr = objArray.map((element) => ({
+    description: element.children[0].children[1].value,
+    completed: element.children[0].children[0].checked,
+    index: element.id.substring(element.id.indexOf('-') + 1, element.id.length),
+  }));
+  task.taskObjArray = tempArr;
+  task.display();
+  task.populateLocalStorage();
+};
+
+export const dragging = () => {
   const draggables = document.querySelectorAll('.draggables');
-  // const dragging = document.querySelectorAll('.dragging');
-  const container = document.getElementById('task-list');
-
-  function setIndex() {
-    const objArray = [...container.querySelectorAll('.draggables')];
-
-    const tempArr = objArray.map((element) => ({
-      description: element.children[0].children[1].value,
-      completed: element.children[0].children[0].checked,
-      index: element.id.substring(
-        element.id.indexOf('-') + 1,
-        element.id.length,
-      ),
-    }));
-    task.listObj = tempArr;
-    task.display();
-    task.populateLocalStorage();
-  }
 
   draggables.forEach((draggable) => {
     draggable.addEventListener('dragstart', () => {
@@ -34,13 +31,13 @@ export default function dragging() {
       draggable.classList.remove('dot-menu');
       setIndex();
     });
-    container.addEventListener('dragover', (e) => {
+    taskContainer.addEventListener('dragover', (e) => {
       const dragging = document.querySelector('.dragging');
       e.preventDefault();
-      const detectElement = getPositionOfElement(container, e.clientY);
+      const detectElement = getPositionOfElement(taskContainer, e.clientY);
       if (detectElement !== null) {
-        container.insertBefore(dragging, detectElement);
+        taskContainer.insertBefore(dragging, detectElement);
       }
     });
   });
-}
+};
