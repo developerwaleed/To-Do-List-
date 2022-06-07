@@ -2,7 +2,7 @@
 import listItem from './listItem.js';
 // import getPositionOfElement from './getElementPostion.js';
 // eslint-disable-next-line import/no-cycle
-import {dragging, setIndex} from './DraggingFunctions.js';
+import { dragging } from './DraggingFunctions.js';
 
 export default class ToDoList {
   constructor() {
